@@ -1,0 +1,43 @@
+# Craft-specific files #
+######################
+site/craft/app/
+site/craft/plugins/
+site/craft/storage/
+site/craft/config/db.php
+
+# Craft Storage (cache) [http://buildwithcraft.com/help/craft-storage-gitignore]
+site/craft/storage/*
+!site/craft/storage/logo/*
+
+# Logs and databases #
+######################
+*.log
+
+# Tmp and noise files #
+######################
+$RECYCLE.BIN/
+*.*~
+*.log
+*.pid
+*.un~
+*~
+.*.sw[a-z]
+.DS_Store
+.Spotlight-V100
+.Trashes
+.\#*
+._*
+.directory
+.elc
+/.emacs.desktop
+/.emacs.desktop.lock
+Desktop.ini
+Session.vim
+Thumbs.db
+\#*\#
+auto-save-list
+log
+logs
+temp
+tmp
+tramp
