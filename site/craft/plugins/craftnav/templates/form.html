@@ -1,0 +1,66 @@
+{% extends '_layouts/cp' %}
+{% import '_includes/forms' as forms %}
+{% set title = "CraftNav - Create Nav <small>Created by <a href='http://craftpl.us' target='_blank'>Craftpl.us</a></small>" %}
+
+{% set tabs = {
+    events:     { label: "Dashboard"|t, url: url('craftnav') },
+    create:   { label: "Create"|t, url: url('craftnav/form') },
+    settings:   { label: "Settings"|t, url: url('settings/plugins/craftnav') },
+} %}
+
+{% set selectedTab = 'create' %}
+
+{% if navId is not defined %}{% set navId = null %}{% endif %}
+
+{% if craftnav is not defined %}
+    {% if navId %}
+        {% set craftnav = craft.craftnav.getById(navId) %}
+        {% if not craftnav %}{% exit 404 %}{% endif %}
+    {% else %}
+        {% set craftnav = null %}
+    {% endif %}
+{% endif %}
+
+{% set content %}
+    <form method="post" action="">
+        <input type="hidden" name="action" value="craftnav/savenav" />
+        <input type="hidden" name="redirect" value="/" />
+        <input type="hidden" name="navId" value="{{ navId }}" />
+
+        {{ forms.textField({
+            label: 'Menu Name'|t,
+            required: true,
+            name: 'name',
+            id: 'name',
+            value: craftnav ? craftnav.name : null,
+            instructions: 'What should this menu be named?'
+        }) }}
+
+        {{ forms.textField({
+            label: 'Menu Title'|t,
+            required: true,
+            id: 'title',
+            name: 'title',
+            value: craftnav ? craftnav.title : null,
+            instructions: 'This will be your shortcode. No spaces or strange characters please. E.g. craft.CraftNav.<em class="custom_replace">yourtitle</em>'
+        }) }}
+
+        {{ forms.textareaField({
+            label: 'Description'|t,
+            required: true,
+            id: 'desc',
+            name: 'desc',
+            rows: '5',
+            value: craftnav ? craftnav.desc : null,
+            instructions: 'Write a short description about this nav'
+        }) }}
+
+        <div class="buttons">
+            <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
+        </div>
+    </form>
+    {% include "craftnav/snappy.html" %}
+{% endset %}
+
+{% includeCssResource "craftnav/styles.css" %}
+{% includeJsResource "craftnav/script.js" %}

@@ -1,0 +1,56 @@
+{% extends "_layouts/cp" %}
+{% set title = "CraftNav - Dashboard <small>Created by <a href='http://craftpl.us' target='_blank'>Craftpl.us</a></small>" %}
+
+{% set tabs = {
+    dash:     { label: "Dashboard"|t, url: url('craftnav') },
+    create:   { label: "Create"|t, url: url('craftnav/form') },
+    settings:   { label: "Settings"|t, url: url('settings/plugins/craftnav') },
+} %}
+
+{% set selectedTab = 'dash' %}
+{% set forms = craft.craftnav.grabNavs() %}
+
+{% set sidebar %}
+<div class="buttons">
+	<a href="{{ url('craftnav/form') }}"><div class="btn submit add icon">New Menu</div></a>
+</div>
+{% endset %}
+
+{% set content %}
+    <h1>Your Menus</h1>
+    {% if forms %}
+    <div class="elements"><div class="tableview">
+	<table class="data">
+		<thead>
+				<tr><th scope="col" data-attribute="title">Title</th>
+				<th scope="col" data-attribute="uri">Shortcode</th>
+				<th scope="col" data-attribute="expiryDate">Description</th>
+                <th scope="col" data-attribute="postDate">Create Date</th>
+				<th scope="col" data-attribute="postDate">Last Updated</th>
+				<th scope="col" data-attribute="actions">Actions</th>
+		</tr></thead>
+		<tbody>
+
+			{% for form in forms %}
+	    		<tr>
+
+	    			<td><a href="{{ url('craftnav/build/'~form.id) }}">{{ form.name }}</a></td>
+	    			<td>{{ form.title }}</td>
+	    			<td>{{ form.desc }}</td>
+                    <td>{{ form.dateCreated|date('M. d, Y') }}</td>
+	    			<td>{{ form.dateUpdated|date('M. d, Y') }}</td>
+	    			<td><a href="{{ url('craftnav/form/'~form.id) }}" class="settings icon" title="Settings"></a> <a class="delete icon" title="Remove"></a><input type="hidden" value="{{ form.id }}" name="id"></td>
+	    		</tr>
+	    	{% endfor %}
+    	</tbody>
+		</table>
+	</div>
+	</div>
+    {% else %}
+    	<p>You haven't created a menu yet. <a href="{{ url('craftnav/form') }}">Click to create one</a></p>
+    {% endif %}
+    {% include "craftnav/snappy.html" %}
+{% endset %}
+
+{% includeCssResource "craftnav/styles.css" %}
+{% includeJsResource "craftnav/script.js" %}

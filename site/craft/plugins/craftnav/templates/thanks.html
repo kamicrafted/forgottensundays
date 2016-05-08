@@ -1,0 +1,16 @@
+{% extends "_layouts/cp" %}
+{% set title = "<div class='thanks'><span>Welcome to CraftNav!</span><p>Thanks for purchasing and supporting Craft Plus.</p></div>" %}
+
+{% includeCssResource "craftnav/styles.css" %}
+{% includeJsResource "craftnav/script.js" %}
+{% includeJsResource "craftnav/track-ck.js" %}
+
+{% set content %}
+    <div class="center" style="margin:0 auto;">
+        <p>We appreciate your support and hope you enjoy Craft Nav. If there's anything we can do to help, please don't hesitate to contact us.</p>
+        <a href="{{ url('craftnav/form') }}"><button class="btn submit">Click here to create your first Nav</button></a>
+        <p><a href="http://craftpl.us/plugins/craftnav" target="_blank">View documentation</a> | <a href="" class="js-contact">Contact Us</a></p>
+        <a href="http://craftpl.us/"><button class="btn">Sign up for the CraftNav Newsletter</button></a>
+    </div>
+    {% include "craftnav/snappy.html" %}
+{% endset %}

@@ -1,0 +1,139 @@
+{% extends '_layouts/cp' %}
+{% import '_includes/forms' as forms %}
+{% set title = "CraftNav - Build <small>Created by <a href='http://craftpl.us' target='_blank'>Craftpl.us</a></small>" %}
+
+{% set tabs = {
+    events:     { label: "Dashboard"|t, url: url('craftnav') },
+    create:   { label: "Create"|t, url: url('craftnav/form') },
+    build:   { label: "Build"|t, url: url('craftnav/build') },
+    settings:   { label: "Settings"|t, url: url('settings/plugins/craftnav') },
+} %}
+
+{% if navId is not defined %}{% set navId = null %}{% endif %}
+
+{% if craftnav is not defined %}
+    {% if navId %}
+        {% set craftnav = craft.craftnav.getById(navId) %}
+        {% set lists = craft.craftnav.grablists(navId) %}
+        {% if lists %}
+            {% set listoptions = craft.craftnav.grablistsoptions(navId) %}
+        {% else %}
+            {% set lists = '' %}
+            {% set listoptions = '' %}
+        {% endif %}
+    {% else %}
+        {% exit 404 %}
+
+        {% set craftnav = null %}
+        {% set lists = craft.craftnav.grablists(navId) %}
+        {% set listoptions = null %}
+    {% endif %}
+{% endif %}
+
+{% set selectedTab = 'build' %}
+
+
+{% block main %}
+<div class="grid first build_page">
+    <div class="item" data-position="left" data-min-colspan="2" data-max-colspan="3">
+        <div id="fields" class="pane">
+        {% include "_includes/tabs" %}
+
+        {% if lists %}
+        <div class="dd">
+
+            {% macro menu_links(lists) %}
+
+                {% for items in lists %}
+                    {% for li in items %}
+                        <li class="dd-item dd3-item" data-id="{{ li.id }}">
+                            <div class="dd-handle dd3-handle move icon"></div>
+                            <div class="dd3-content">
+                                <a href="" class="link" data="{{ li.link }}">{{ li.text }}</a>
+                                <a href="" class="settings icon" title="Settings"></a>
+                                <a class="delete icon" title="Remove"></a>
+                            </div>
+                            {% if li.children is defined and li.children|length > 0 %}
+                                <ol>
+                                    {# force array creation to stupid twig looping #}
+                                    {{ _self.menu_links([li.children]) }}
+                                </ol>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+            {% endmacro %}
+
+            {% import _self as macros %}
+
+            <ol class="dd-list">
+                {{ macros.menu_links(lists) }}
+            </ol>
+
+        </div>
+
+        <menu id="nestable-menu">
+            <button type="button" data-action="expand-all">Expand All</button>
+            <button type="button" data-action="collapse-all">Collapse All</button>
+        </menu>
+        {% else %}
+            <h1>Get started with CraftNav</h1>
+            <p>Add a nav item on the right to get started!</p>
+        {% endif %}
+        
+        </div>
+    </div>
+    <div class="item" data-position="right" data-colspan="1">
+        <div class="pane">
+            {% if craftnav %}
+                <h1>{{ craftnav.name }} <a href="/admin/craftnav/form/{{ navId }}" class="settings icon" title="Settings"></a></h1>
+                {% set embed_var = '{{ craft.craftnav.nav("' ~ craftnav.title ~ '") }}' %}
+                <p class="gray">Embed variable: {{ embed_var }}</p>
+            {% endif %}
+        </div>
+        <div id="form" class="pane">
+            <form method="post" action="">
+                <input type="hidden" name="action" value="craftnav/savenavitem" />
+                <input type="hidden" name="redirect" value="/" />
+                <input type="hidden" name="navId" value="{{ navId }}" />
+                <input type="hidden" name="id" value="" />
+
+                {{ forms.textField({
+                    label: 'Link Name'|t,
+                    required: true,
+                    name: 'text',
+                    id: 'text',
+                    value: '',
+                    instructions: 'What is this link called?'
+                }) }}
+
+                {{ forms.textField({
+                    label: 'URL'|t,
+                    required: true,
+                    name: 'link',
+                    id: 'link',
+                    value: '',
+                    instructions: 'Where should this link? You can use {siteUrl}!</a>'
+                }) }}
+
+                {{ forms.selectField({
+                    label: 'Parent'|t,
+                    required: true,
+                    name: 'parent',
+                    options: listoptions,
+                    value: '',
+                }) }}
+
+                <div class="buttons">
+                    <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    {% include "craftnav/snappy.html" %}
+{% endblock %}
+
+{% includeCssResource "craftnav/styles.css" %}
+{% includeJsResource "craftnav/jquery.nestable.js" %}
+{% includeJsResource "craftnav/script-ck.js" %}
