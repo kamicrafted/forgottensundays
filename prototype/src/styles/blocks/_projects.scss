@@ -6,6 +6,7 @@
     position: relative;
     margin-bottom: 2px;
     &:hover {
+      margin-bottom: 0;
       .projects__item-preview {
         height: $project-height-expanded;
         border: 20px solid #fff;
