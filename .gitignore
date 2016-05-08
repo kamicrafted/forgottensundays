@@ -3,6 +3,7 @@
 site/craft/app/
 site/craft/storage/
 site/craft/config/db.php
+site/craft/config/license.key
 
 # Craft Storage (cache) [http://buildwithcraft.com/help/craft-storage-gitignore]
 site/craft/storage/*
