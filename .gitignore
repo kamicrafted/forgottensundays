@@ -9,6 +9,11 @@ site/craft/config/db.php
 site/craft/storage/*
 !site/craft/storage/logo/*
 
+# Gulp related files
+node_modules
+dist
+prototype/src/scripts/vendor
+
 # Logs and databases #
 ######################
 *.log

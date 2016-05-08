@@ -1,0 +1,37 @@
+// .menu {
+//   margin: 0 auto;
+//   max-width: 600px;
+//   &__list {
+//     display: flex;
+//     padding: 0;
+//     margin: 0;
+//     list-style-type: none;
+//     text-align: center;
+//   }
+//   &__item {
+//     flex: 1 1 auto; /* grow shrink basis */
+//   }
+//   &__link {
+//     text-decoration: none;
+//   }
+// }
+
+.menu {
+  margin: 0 auto;
+  text-align: center;
+  &__list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+  &__item {
+    display: inline-block;
+    margin: 0 10px;
+    text-transform: uppercase;
+    font-size: em(12);
+  }
+  &__link {
+    display: block;
+    text-decoration: none;
+  }
+}

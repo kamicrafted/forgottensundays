@@ -1,0 +1,36 @@
+.site-header {
+  position: relative;
+  text-align: center;
+  transition: all .5s $ease-out-quad;
+  left: 50%;
+  transform: translateX(-50%);
+  &__logo {
+    margin: 20px 0;
+    img {
+      display: inline-block;
+    }
+  }
+  &--compact {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    width: 100%;
+    background: #fff;
+    .site-header__wrap {
+      display: flex;
+      align-items: center;
+      max-width: $site-width;
+      margin: 0 auto;
+    }
+    .menu {
+      flex: 1 1 auto;
+      display: flex;
+      justify-content: flex-end;
+      &__item {
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

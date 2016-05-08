@@ -1,0 +1,18 @@
+@import 'normalize';
+@import 'bourbon/app/assets/stylesheets/bourbon';
+@import 'variables';
+@import 'utility';
+
+@import 'blocks/menu';
+@import 'blocks/site-header';
+@import 'blocks/site-content';
+@import 'blocks/projects';
+
+html, body {
+  font-size: $base-font-size;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: normal;
+}
