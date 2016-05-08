@@ -1,7 +1,6 @@
 # Craft-specific files #
 ######################
 site/craft/app/
-site/craft/plugins/
 site/craft/storage/
 site/craft/config/db.php
 
